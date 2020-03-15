@@ -1,0 +1,6 @@
+﻿<@ name TestTemplate @>
+<@ input Mondop.CodeDom.CompileUnit as compileUnit @>
+// Just some comment
+<@foreach(ns in compileUnit.Namespaces)@>
+	<@call(ns)@>
+<@ end @>
