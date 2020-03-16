@@ -31,9 +31,11 @@ namespace Mondop.Templates.Test
 
             _templateFactory.Register(template);
 
-            _templateEngine.Process(new TestClassA { Name = "Mondop" }, outputWriter);
+            _templateEngine.Process(new TestClassA { Name = "Mondop",
+                BClasses = new TestClassB[] { new TestClassB { Name = "One"} , new TestClassB { Name="Two"} }
+            }, outputWriter);
 
-            outputWriter.Output.Should().Be("Hello Mondop");
+            outputWriter.Output.Should().Be("Hello Mondop\r\nHello One\r\nHello Two");
         }
     }
 }

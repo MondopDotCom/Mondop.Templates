@@ -2,6 +2,7 @@
 {
     public static class KeyWords
     {
+        public const string Break = "br";
         public const string Name = "name";
         public const string Input = "input";
         public const string ForEach = "foreach";

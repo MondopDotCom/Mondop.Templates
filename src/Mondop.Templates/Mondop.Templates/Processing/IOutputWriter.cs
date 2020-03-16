@@ -5,6 +5,7 @@ namespace Mondop.Templates.Processing
     public interface IOutputWriter
     {
         void Write(string text);
+        void WriteLn();
     }
 
     public class OutputWriter : IOutputWriter
@@ -14,6 +15,11 @@ namespace Mondop.Templates.Processing
         public void Write(string text)
         {
             _stringBuilder.Append(text);
+        }
+
+        public void WriteLn()
+        {
+            _stringBuilder.AppendLine();
         }
 
         public string Output => _stringBuilder.ToString();

@@ -7,6 +7,7 @@ namespace Mondop.Templates.Processing
 {
     public class ProcessData
     {
+        public TemplateEngine TemplateEngine { get; set; }
         public IOutputWriter OutputWriter { get; set; }
         public Dictionary<string, object> InputPath { get; } = new Dictionary<string, object>();
     }
@@ -22,10 +23,12 @@ namespace Mondop.Templates.Processing
             _templateFactory = Ensure.IsNotNull(templateFactory, nameof(templateFactory));
             _processors = new Dictionary<Type, IElementProcessor>
             {
+                { typeof(BreakElement), new BreakElementProcessor() },
                 { typeof(InputElement), new InputElementProcessor() },
                 { typeof(NameElement), new NameElementProcessor()},
                 { typeof(LiteralText) , new LiteralTextProcessor() },
-                { typeof(MemberReference), new MemberReferenceProcessor() }
+                { typeof(MemberReference), new MemberReferenceProcessor() },
+                { typeof(ForEachElement), new ForeachElementProcessor() }
             };
         }
 
@@ -43,16 +46,21 @@ namespace Mondop.Templates.Processing
             var processingData = new ProcessData
             {
                 OutputWriter = outputWriter,
+                TemplateEngine = this
             };
             processingData.InputPath.Add(template.Input.Alias, input);
-
-            foreach (var element in template.Children)
-            {
-                var elementProcessor = GetElementProcessor(element);
-                elementProcessor.Process(element, processingData);
-            }
+            ProcessChildren(template.Children, processingData);
 
             return "";
+        }
+
+        public void ProcessChildren(IEnumerable<TemplateElement> children,ProcessData processData)
+        {
+            foreach (var element in children)
+            {
+                var elementProcessor = GetElementProcessor(element);
+                elementProcessor.Process(element, processData);
+            }
         }
 
         private IElementProcessor GetElementProcessor(TemplateElement templateElement)

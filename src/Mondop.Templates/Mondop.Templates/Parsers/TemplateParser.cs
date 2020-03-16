@@ -93,6 +93,9 @@ namespace Mondop.Templates.Parsers
             var keyword = GetKeyWord(tagData);
             switch (keyword)
             {
+                case KeyWords.Break:
+                    new BreakParser().Parse(tagData, ref parent);
+                    break;
                 case KeyWords.Input:
                     new InputParser().Parse(tagData, ref parent);
                     break;
