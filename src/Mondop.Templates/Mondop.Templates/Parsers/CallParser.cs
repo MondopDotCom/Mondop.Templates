@@ -8,7 +8,7 @@ namespace Mondop.Templates.Parsers
     {
         public void Parse(string data, ref TemplateElementContainer parent)
         {
-            var regex = @"call\(.s*(?<property>.*).s*\)";
+            var regex = @"call\(\s*(?<property>.*)\s*\)";
 
             var match = Regex.Match(data, regex);
             if (!match.Success)

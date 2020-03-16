@@ -62,8 +62,11 @@ namespace Mondop.Templates.Test {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;@ name TestTemplateClassA @&gt;
-        ///&lt;@ input Mondop.Templates.Test.Model.TestClassA as classA @&gt;
-        ///Hello &lt;@classA.Name @&gt;.
+        ///&lt;@ input Mondop.Templates.Test.Model.TestClassA, Mondop.Templates.Test as classA @&gt;
+        ///Hello &lt;@#classA.Name@&gt;
+        ///&lt;@ foreach(classB in classA.BClasses) @&gt;
+        ///	&lt;@ br @&gt;Hello &lt;@#classB.Name@&gt;
+        ///&lt;@ end @&gt;.
         /// </summary>
         internal static string TestEngineTemplate {
             get {
@@ -72,8 +75,18 @@ namespace Mondop.Templates.Test {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string TestEngineTemplate_TestClassB {
+            get {
+                return ResourceManager.GetString("TestEngineTemplate_TestClassB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;@ name TestTemplate @&gt;
         ///&lt;@ input Mondop.CodeDom.CompileUnit as compileUnit @&gt;
+        ///// Just some comment
         ///&lt;@foreach(ns in compileUnit.Namespaces)@&gt;
         ///	&lt;@call(ns)@&gt;
         ///&lt;@ end @&gt;.

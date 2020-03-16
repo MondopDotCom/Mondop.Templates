@@ -28,7 +28,8 @@ namespace Mondop.Templates.Processing
                 { typeof(NameElement), new NameElementProcessor()},
                 { typeof(LiteralText) , new LiteralTextProcessor() },
                 { typeof(MemberReference), new MemberReferenceProcessor() },
-                { typeof(ForEachElement), new ForeachElementProcessor() }
+                { typeof(ForEachElement), new ForeachElementProcessor() },
+                {typeof(CallElement), new CallElementProcessor() },
             };
         }
 
@@ -39,6 +40,25 @@ namespace Mondop.Templates.Processing
                 throw new InvalidOperationException($"Unable to resolve template for object {input.ToString()}");
 
             return Process(template, input, outputWriter);
+        }
+
+        public void Process(object input, ProcessData processData)
+        {
+            var template = _templateFactory.GetTemplate(input);
+            if (template == null)
+                throw new InvalidOperationException($"Unable to resolve template for object {input.ToString()}");
+
+            bool inputPathAdded = false;
+            if (!processData.InputPath.ContainsKey(template.Input.Alias))
+            {
+                processData.InputPath.Add(template.Input.Alias, input);
+                inputPathAdded = true;
+            }
+
+            ProcessChildren(template.Children, processData);
+
+            if (inputPathAdded)
+                processData.InputPath.Remove(template.Input.Alias);
         }
 
         public object Process(Template template, object input, IOutputWriter outputWriter)
@@ -54,7 +74,7 @@ namespace Mondop.Templates.Processing
             return "";
         }
 
-        public void ProcessChildren(IEnumerable<TemplateElement> children,ProcessData processData)
+        public void ProcessChildren(IEnumerable<TemplateElement> children, ProcessData processData)
         {
             foreach (var element in children)
             {

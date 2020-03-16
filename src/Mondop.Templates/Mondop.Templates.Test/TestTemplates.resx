@@ -121,6 +121,9 @@
   <data name="TestEngineTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>testtemplates\testenginetemplate.template;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="TestEngineTemplate_TestClassB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>testtemplates\testenginetemplate.testclassb.template;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="TestTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>testtemplates\testtemplate.template;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>

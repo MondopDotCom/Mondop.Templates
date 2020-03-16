@@ -2,5 +2,5 @@
 <@ input Mondop.Templates.Test.Model.TestClassA, Mondop.Templates.Test as classA @>
 Hello <@#classA.Name@>
 <@ foreach(classB in classA.BClasses) @>
-	<@ br @>Hello <@#classB.Name@>
+	<@ call(classB) @>
 <@ end @>

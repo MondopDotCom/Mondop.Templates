@@ -25,17 +25,24 @@ namespace Mondop.Templates.Test
         public void TestTemplate()
         {
             var outputWriter = new OutputWriter();
-            var templateData = TestTemplates.TestEngineTemplate;
+            AddTemplate(TestTemplates.TestEngineTemplate);
+            AddTemplate(TestTemplates.TestEngineTemplate_TestClassB);
+
+            _templateEngine.Process(new TestClassA
+            {
+                Name = "Mondop",
+                BClasses = new TestClassB[] { new TestClassB { Name = "One" }, new TestClassB { Name = "Two" } }
+            }, outputWriter);
+
+            outputWriter.Output.Should().Be("Hello Mondop\r\nHello One\r\nHello Two");
+        }
+
+        private void AddTemplate(string templateData)
+        {
             var template = _templateParser.Parse(templateData);
             template.Should().NotBeNull();
 
             _templateFactory.Register(template);
-
-            _templateEngine.Process(new TestClassA { Name = "Mondop",
-                BClasses = new TestClassB[] { new TestClassB { Name = "One"} , new TestClassB { Name="Two"} }
-            }, outputWriter);
-
-            outputWriter.Output.Should().Be("Hello Mondop\r\nHello One\r\nHello Two");
         }
     }
 }
