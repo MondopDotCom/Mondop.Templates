@@ -2,7 +2,7 @@
 
 namespace Mondop.Templates.Processing
 {
-    public class CallElementProcessor: ElementProcessor<CallElement>
+    internal class CallElementProcessor: ElementProcessor<CallElement>
     {
         protected override void _Process(CallElement element, ProcessData processData)
         {

@@ -1,13 +1,8 @@
 ﻿using Mondop.Templates.Model;
-using System.Collections.Generic;
 
 namespace Mondop.Templates.Processing
 {
-    public interface IElementProcessor
-    {
-        void Process(TemplateElement element, ProcessData processData);
-    }
-    public class ElementProcessor<T> : IElementProcessor where T : TemplateElement
+    internal class ElementProcessor<T> : IElementProcessor where T : TemplateElement
     {
         public void Process(TemplateElement element, ProcessData processData) =>
             _Process((T)element, processData);

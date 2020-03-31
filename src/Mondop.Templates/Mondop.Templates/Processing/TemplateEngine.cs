@@ -5,22 +5,17 @@ using System.Collections.Generic;
 
 namespace Mondop.Templates.Processing
 {
-    public class ProcessData
-    {
-        public TemplateEngine TemplateEngine { get; set; }
-        public IOutputWriter OutputWriter { get; set; }
-        public Dictionary<string, object> InputPath { get; } = new Dictionary<string, object>();
-    }
-
     public class TemplateEngine
     {
-        private readonly TemplateFactory _templateFactory;
+        private readonly ITemplateFactory _templateFactory;
 
         private readonly Dictionary<Type, IElementProcessor> _processors;
+        private readonly IOutputResolver _outputResolver;
 
-        public TemplateEngine(TemplateFactory templateFactory)
+        public TemplateEngine(ITemplateFactory templateFactory, IOutputResolver outputResolver)
         {
             _templateFactory = Ensure.IsNotNull(templateFactory, nameof(templateFactory));
+            _outputResolver = Ensure.IsNotNull(outputResolver, nameof(outputResolver));
             _processors = new Dictionary<Type, IElementProcessor>
             {
                 { typeof(BreakElement), new BreakElementProcessor() },
@@ -33,16 +28,20 @@ namespace Mondop.Templates.Processing
             };
         }
 
-        public object Process(object input, IOutputWriter outputWriter)
+        public IOutputWriter Process(object input)
         {
             var template = _templateFactory.GetTemplate(input);
             if (template == null)
                 throw new InvalidOperationException($"Unable to resolve template for object {input.ToString()}");
 
-            return Process(template, input, outputWriter);
+            var outputWriter = _outputResolver.GetWriter(template, input);
+
+            Process(template, input, outputWriter);
+
+            return outputWriter;
         }
 
-        public void Process(object input, ProcessData processData)
+        internal void Process(object input, ProcessData processData)
         {
             var template = _templateFactory.GetTemplate(input);
             if (template == null)
@@ -61,7 +60,7 @@ namespace Mondop.Templates.Processing
                 processData.InputPath.Remove(template.Input.Alias);
         }
 
-        public object Process(Template template, object input, IOutputWriter outputWriter)
+        private void Process(Template template, object input, IOutputWriter outputWriter)
         {
             var processingData = new ProcessData
             {
@@ -70,11 +69,9 @@ namespace Mondop.Templates.Processing
             };
             processingData.InputPath.Add(template.Input.Alias, input);
             ProcessChildren(template.Children, processingData);
-
-            return "";
         }
 
-        public void ProcessChildren(IEnumerable<TemplateElement> children, ProcessData processData)
+        internal void ProcessChildren(IEnumerable<TemplateElement> children, ProcessData processData)
         {
             foreach (var element in children)
             {

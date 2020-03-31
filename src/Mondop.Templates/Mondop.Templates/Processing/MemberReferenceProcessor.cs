@@ -3,7 +3,7 @@ using System;
 
 namespace Mondop.Templates.Processing
 {
-    public class MemberReferenceProcessor: ElementProcessor<MemberReference>
+    internal class MemberReferenceProcessor: ElementProcessor<MemberReference>
     {
         protected override void _Process(MemberReference element, ProcessData processData)
         {

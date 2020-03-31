@@ -1,7 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
+    <Version>0.0.1</Version>
+    <Authors>Marcel Vroone</Authors>
+    <Company>It-actief</Company>
+    <Product>Mondop</Product>
+    <Description>Simple text templating package.</Description>
+    <Copyright>Copyright 2020 by It-actief</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>http://www.mondop.com</PackageProjectUrl>
+    <PackageReleaseNotes>0.0.1 initial prerelease, supports input,name, br, foreach and call elements.</PackageReleaseNotes>
+    <RepositoryUrl>https://github.com/MondopDotCom/Mondop.Templates</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

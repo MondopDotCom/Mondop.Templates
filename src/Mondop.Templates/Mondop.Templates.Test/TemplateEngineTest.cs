@@ -13,26 +13,26 @@ namespace Mondop.Templates.Test
         private TemplateParser _templateParser;
         private TemplateFactory _templateFactory;
 
+
         [TestInitialize]
         public void TestInitialize()
         {
             _templateFactory = new TemplateFactory();
-            _templateEngine = new TemplateEngine(_templateFactory);
+            _templateEngine = new TemplateEngine(_templateFactory, new TestOutputResolver());
             _templateParser = new TemplateParser();
         }
 
         [TestMethod]
         public void TestTemplate()
         {
-            var outputWriter = new OutputWriter();
             AddTemplate(TestTemplates.TestEngineTemplate);
             AddTemplate(TestTemplates.TestEngineTemplate_TestClassB);
 
-            _templateEngine.Process(new TestClassA
+            var outputWriter = _templateEngine.Process(new TestClassA
             {
                 Name = "Mondop",
                 BClasses = new TestClassB[] { new TestClassB { Name = "One" }, new TestClassB { Name = "Two" } }
-            }, outputWriter);
+            });
 
             outputWriter.Output.Should().Be("Hello Mondop\r\nHello One\r\nHello Two");
         }

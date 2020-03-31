@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace Mondop.Templates.Processing
 {
-    public class ForeachElementProcessor : ElementProcessor<ForEachElement>
+    internal class ForeachElementProcessor : ElementProcessor<ForEachElement>
     {
         protected override void _Process(ForEachElement element, ProcessData processData)
         {

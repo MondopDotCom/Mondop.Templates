@@ -5,7 +5,13 @@ using System.Linq;
 
 namespace Mondop.Templates.Processing
 {
-    public class TemplateFactory
+    public interface ITemplateFactory
+    {
+        void Register(Template template);
+        Template GetTemplate(object input);
+    }
+
+    public class TemplateFactory: ITemplateFactory
     {
         private readonly List<Template> _registrations = new List<Template>();
 

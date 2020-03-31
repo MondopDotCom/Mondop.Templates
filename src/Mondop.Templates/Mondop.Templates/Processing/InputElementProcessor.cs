@@ -2,7 +2,7 @@
 
 namespace Mondop.Templates.Processing
 {
-    public class InputElementProcessor: ElementProcessor<InputElement>
+    internal class InputElementProcessor: ElementProcessor<InputElement>
     {
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Mondop.Templates.Processing
 {
-    public class NameElementProcessor: ElementProcessor<NameElement>
+    internal class NameElementProcessor: ElementProcessor<NameElement>
     {
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Mondop.Templates.Processing
 {
-    public class LiteralTextProcessor: ElementProcessor<LiteralText>
+    internal class LiteralTextProcessor: ElementProcessor<LiteralText>
     {
         protected override void _Process(LiteralText element, ProcessData processData)
         {
